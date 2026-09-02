@@ -6,351 +6,7 @@
 <title>Why Humans Create: A Multidisciplinary Inquiry</title>
 <meta name="description" content="A research-grounded answer to two questions: why humans have such a deep drive to create, and why ownership over what we create feels so powerful. With sources, confidence labels, and a review log.">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #e2ded6;
-    --paper: #080808;
-    --accent: #d4714f;
-    --accent-light: #e8956e;
-    --muted: #8a847b;
-    --text-body: #a39d94;
-    --text-card: #8f897f;
-    --section-bg: #0e0e0e;
-    --card-bg: #131313;
-    --border: #1e1c1a;
-    --shadow: rgba(0, 0, 0, 0.5);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    line-height: 1.72;
-    font-size: 17px;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a { color: var(--accent-light); }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 60px 24px;
-    position: relative;
-    overflow: hidden;
-    background: #030303;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 700px 500px at 25% 35%, rgba(212, 113, 79, 0.08), transparent),
-      radial-gradient(ellipse 500px 500px at 75% 65%, rgba(232, 213, 160, 0.03), transparent);
-    pointer-events: none;
-  }
-
-  .hero-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--accent-light);
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.2s forwards;
-    position: relative; z-index: 1;
-  }
-
-  .hero h1 {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(42px, 7vw, 96px);
-    color: #f0ece4;
-    line-height: 1.08;
-    max-width: 800px;
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.4s forwards;
-    position: relative; z-index: 1;
-  }
-
-  .hero h1 em { font-style: italic; color: var(--accent-light); }
-
-  .hero-sub {
-    font-size: 18px;
-    color: rgba(226, 222, 214, 0.62);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.6s forwards;
-    position: relative; z-index: 1;
-  }
-
-  .hero-prov {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 1px;
-    color: rgba(226, 222, 214, 0.5);
-    max-width: 560px; line-height: 1.8;
-    margin-bottom: 44px;
-    opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
-    position: relative; z-index: 1;
-  }
-
-  .hero-nav {
-    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
-    opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards;
-    position: relative; z-index: 1;
-  }
-
-  .hero-nav a, .hero-nav button {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
-    text-decoration: none; color: #f0ece4; background: none; cursor: pointer;
-    padding: 14px 28px;
-    border: 1px solid rgba(226, 222, 214, 0.2);
-    transition: all 0.3s ease;
-  }
-
-  .hero-nav a:hover, .hero-nav button:hover { background: var(--accent); border-color: var(--accent); }
-  .hero-nav .primary { background: var(--accent); border-color: var(--accent); }
-  .hero-nav .primary:hover { background: var(--accent-light); border-color: var(--accent-light); }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-label, .hero h1, .hero-sub, .hero-prov, .hero-nav { animation: none; opacity: 1; }
-  }
-
-  /* TLDR */
-  .tldr-section {
-    background: linear-gradient(180deg, #030303, #060606 40%, var(--paper) 100%);
-    padding: 80px 24px 72px;
-  }
-
-  .tldr-inner {
-    max-width: 900px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
-  }
-
-  .tldr-label {
-    grid-column: 1 / -1; text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--accent-light); margin-bottom: 12px;
-  }
-
-  .tldr-card {
-    background: rgba(255, 255, 255, 0.015);
-    border: 1px solid rgba(226, 222, 214, 0.08);
-    padding: 36px 32px; position: relative;
-  }
-
-  .tldr-card .tldr-q-num {
-    font-family: 'Instrument Serif', serif; font-size: 52px;
-    color: rgba(212, 113, 79, 0.14);
-    position: absolute; top: 14px; right: 24px; line-height: 1;
-  }
-
-  .tldr-card h3 {
-    font-family: 'Instrument Serif', serif; font-size: 22px;
-    color: #f0ece4; line-height: 1.25; margin-bottom: 18px; max-width: 88%;
-  }
-
-  .tldr-card p {
-    font-size: 14.5px; line-height: 1.78;
-    color: rgba(226, 222, 214, 0.62); margin-bottom: 14px;
-  }
-  .tldr-card p:last-child { margin-bottom: 0; }
-  .tldr-card p strong { color: rgba(226, 222, 214, 0.9); font-weight: 500; }
-
-  .confidence {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--muted);
-    border-top: 1px solid rgba(226, 222, 214, 0.08); padding-top: 12px; margin-top: 16px;
-  }
-  .confidence b { color: #d4a94e; font-weight: 500; }
-
-  @media (max-width: 720px) {
-    .tldr-inner { grid-template-columns: 1fr; }
-    .tldr-section { padding: 60px 18px 48px; }
-    .tldr-card { padding: 28px 24px; }
-  }
-
-  /* TABS */
-  .tab-bar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(8, 8, 8, 0.88);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    display: flex; justify-content: center; padding: 0 24px;
-  }
-
-  .tab-btn {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    background: none; border: none; color: var(--muted);
-    padding: 20px 28px; cursor: pointer; position: relative;
-    transition: color 0.3s ease;
-  }
-
-  .tab-btn::after {
-    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 0; height: 2px; background: var(--accent); transition: width 0.3s ease;
-  }
-
-  .tab-btn[aria-selected="true"] { color: var(--ink); }
-  .tab-btn[aria-selected="true"]::after { width: 60%; }
-  .tab-btn:hover { color: var(--ink); }
-
-  /* CONTENT */
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  .content-wrap { max-width: 760px; margin: 0 auto; padding: 64px 24px 120px; }
-
-  .section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent); display: block; margin-bottom: 12px;
-  }
-
-  h2.section-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(30px, 4.5vw, 42px); line-height: 1.15;
-    margin-bottom: 32px; color: #f0ece4;
-  }
-
-  h3.sub-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 24px; line-height: 1.3; margin: 40px 0 16px; color: #ddd8d0;
-  }
-
-  .section-block { margin-bottom: 64px; padding-top: 32px; }
-  .section-block + .section-block { border-top: 1px solid var(--border); }
-
-  p { margin-bottom: 20px; color: var(--text-body); font-weight: 400; }
-  ul.plain { margin: 0 0 20px 22px; color: var(--text-body); }
-  ul.plain li { margin-bottom: 10px; }
-
-  /* LEGEND */
-  .legend {
-    display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 0 0 36px;
-    padding: 18px 22px; border: 1px solid var(--border); background: var(--section-bg);
-  }
-  .legend .legend-title {
-    flex-basis: 100%; font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
-  }
-  .legend span.tag { font-size: 13px; color: var(--text-body); }
-  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; margin-right: 8px; }
-  .tag-empirical { background: #142614; color: #7ec472; }
-  .tag-theory { background: #12202a; color: #6fb2d4; }
-  .tag-contested { background: #2e1410; color: #e8856e; }
-  .tag-historical { background: #24201a; color: #c9b184; }
-
-  /* CONCEPT CARDS */
-  .concept-card {
-    background: var(--card-bg); border-left: 3px solid var(--accent);
-    padding: 24px 28px; margin: 28px 0; box-shadow: 0 2px 16px var(--shadow);
-  }
-
-  .concept-card .card-label { margin-bottom: 10px; }
-
-  .concept-card .card-title {
-    font-family: 'Instrument Serif', serif; font-size: 20px;
-    margin-bottom: 8px; color: #ddd8d0;
-  }
-
-  .concept-card p { font-size: 15px; margin-bottom: 12px; color: var(--text-card); }
-  .concept-card p:last-child { margin-bottom: 0; }
-
-  /* TENSION CALLOUT */
-  .tension-box {
-    background: linear-gradient(135deg, #0d0c0a, #12100e);
-    border: 1px solid var(--border); padding: 28px 32px; margin: 32px 0;
-    position: relative;
-  }
-
-  .tension-box .tension-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 10px;
-  }
-
-  .tension-box p { font-size: 15.5px; margin-bottom: 12px; color: var(--text-body); }
-  .tension-box p:last-child { margin-bottom: 0; }
-
-  .researcher { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--accent); }
-  a.cite { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
-  a.cite:hover { color: var(--accent-light); border-bottom-color: var(--accent-light); }
-  strong { font-weight: 600; color: var(--ink); }
-  em { font-style: italic; }
-
-  /* REVIEW LOG */
-  .audit-item {
-    background: var(--card-bg); border: 1px solid var(--border);
-    margin: 24px 0; box-shadow: 0 1px 8px var(--shadow); padding: 20px 24px;
-  }
-  .audit-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-  .audit-severity {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-    padding: 3px 10px; border-radius: 2px; flex-shrink: 0; margin-top: 3px;
-  }
-  .severity-high { background: #2e1410; color: #e8856e; }
-  .severity-med { background: #2a2010; color: #d4a94e; }
-  .severity-low { background: #142614; color: #7ec472; }
-  .audit-head h4 { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500; color: #ccc8c0; line-height: 1.4; }
-  .audit-item p { font-size: 15px; margin-bottom: 10px; }
-  .audit-item p:last-child { margin-bottom: 0; }
-  .audit-item .fix { color: var(--text-card); }
-  .audit-item .fix b { color: #7ec472; font-weight: 500; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-right: 6px; }
-  .audit-item .fix b.open { color: #d4a94e; }
-
-  .aside-note {
-    font-size: 14px; color: var(--muted);
-    border-left: 2px solid var(--border); padding-left: 16px;
-    margin: 24px 0; font-style: italic;
-  }
-
-  /* SOURCES */
-  .sources ol { margin: 0 0 0 22px; color: var(--text-body); font-size: 14.5px; }
-  .sources li { margin-bottom: 12px; line-height: 1.6; scroll-margin-top: 84px; }
-  .section-block { scroll-margin-top: 72px; }
-  .sources li:target { background: rgba(212, 113, 79, 0.08); outline: 1px solid rgba(212,113,79,0.3); padding: 4px 8px; }
-  .sources a { color: var(--accent-light); text-decoration: none; border-bottom: 1px dotted var(--accent-light); word-break: break-all; }
-
-  .progress-track { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200; }
-  .progress-fill { height: 100%; width: 0%; background: var(--accent); transition: width 0.1s linear; }
-
-  .footer {
-    text-align: center; padding: 48px 24px; border-top: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
-    line-height: 2.2;
-  }
-
-  @media (max-width: 640px) {
-    .content-wrap { padding: 40px 18px 80px; }
-    .tab-btn { padding: 16px 14px; font-size: 10px; letter-spacing: 1.5px; }
-    .concept-card { padding: 20px; }
-    .tension-box { padding: 24px 20px; }
-    .hero-nav a, .hero-nav button { padding: 12px 20px; }
-  }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -362,7 +18,7 @@
   <p class="hero-sub">Two questions: why the drive to build things runs so deep, and why what we build feels so much like <em>ours</em>. An answer drawn from evolutionary biology, psychology, archaeology and philosophy, with the seams left showing.</p>
   <div class="hero-nav">
     <button class="primary" type="button" onclick="switchTab('research', true)">Read the Answer</button>
-    <button type="button" onclick="switchTab('audit', true)">Read the Review Log</button>
+    <button type="button" onclick="switchTab('sources', true)">Sources</button>
   </div>
 </section>
 
@@ -390,7 +46,6 @@
 
 <div class="tab-bar" id="main" role="tablist" aria-label="Page sections">
   <button class="tab-btn" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="true" onclick="switchTab('research')">The Answer</button>
-  <button class="tab-btn" role="tab" id="tab-audit" aria-controls="panel-audit" aria-selected="false" onclick="switchTab('audit')">Review Log</button>
   <button class="tab-btn" role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" onclick="switchTab('sources')">Sources</button>
 </div>
 
@@ -541,88 +196,6 @@
 </div>
 </div>
 
-<div class="panel" id="panel-audit" role="tabpanel" aria-labelledby="tab-audit">
-<div class="content-wrap">
-
-  <div class="section-block">
-    <span class="section-num">Review Log</span>
-    <h2 class="section-title">What the First Draft Got Wrong</h2>
-    <p>An earlier version of this page was drafted by an AI model and carried its own "critical audit" tab. An independent fact-check found that the audit contained no factual corrections, claimed fixes that were not in the text, and graded a draft the reader could not see. This log replaces it. It lists what was wrong in the previous version, what was changed, and what is still weak in the version you are reading. Items are ordered by how much they would have misled a reader.</p>
-  </div>
-
-  <div class="section-block">
-    <span class="section-num">Category I</span>
-    <h2 class="section-title">Errors and Misattributions</h2>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>Flow was described as one of the most reliable sources of happiness</h4></div><p>The draft said experience-sampling studies find "higher happiness during active creation than passive leisure." The best-known ESM result says almost the opposite: people are in flow more at work than at leisure and still prefer leisure (the paradox of work). Flow tracks concentration and challenge, not momentary happiness.</p><p class="fix"><b>Changed</b> Rewritten in Section II with the 1989 study cited. Removed from the summary cards.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>Mumford was made to say things about startups</h4></div><p>One sentence attributed a guild-to-factory-to-startup arc to a 1934 book. The book does not frame history as guilds versus factories, and could not have said anything about startup culture.</p><p class="fix"><b>Changed</b> The sentence is split. Mumford owns the historical claim; the startup extension is marked as ours.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>Dawkins' extended phenotype was misapplied to human culture</h4></div><p>The draft called human creations "an extraordinarily flexible extended phenotype." Dawkins limited the concept to artefacts under genetic influence and handled culture through memes instead.</p><p class="fix"><b>Changed</b> The card now states the limit.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>Karma was confused with dharma</h4></div><p>"Karma frames creation as cosmic duty" mixes two concepts. Duty is dharma. The relevant teaching for the ownership question is the Gita's <em>nishkama karma</em>, acting without attachment to the fruits of action, which the draft did not mention.</p><p class="fix"><b>Changed</b> Rewritten in Section III with the verse cited.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>Psychological ownership was labelled an empirical finding</h4></div><p>Pierce, Kostova and Dirks (2001, 2003) are theory papers. The claim that "attachment to things we've made surpasses attachment to things merely purchased" was presented as their result. It is an inference from their model that has not been tested in those terms. The draft's audit flagged William James for exactly this category error and missed the same error one card up.</p><p class="fix"><b>Changed</b> Relabelled as theory; the inference is marked as such.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The Kyaga aside overreached</h4></div><p>An occupational association between creative professions and bipolar disorder was used to support "the drive to create can be compulsive, obsessive." Registry data cannot show that. The draft's audit also cited "Simonton" with no title or date and asserted burnout rates with no source.</p><p class="fix"><b>Changed</b> The aside now reports the 2011 and 2013 findings as associations and cites the critique of the mad-genius literature.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>Smaller attribution issues</h4></div><p>Many Labs 4 was dated to its 2019 preprint; the paper was published in 2022. Pinker's byproduct list was paraphrased with terms he did not use ("pattern recognition," "emotional regulation") and given no year. The summary said SDT's third need is "connection"; the term is relatedness. The draft said the IKEA effect is "moderated by domain investment," which is not a boundary condition in the 2012 paper; completion and disassembly are.</p><p class="fix"><b>Changed</b> All four corrected.</p></div>
-  </div>
-
-  <div class="section-block">
-    <span class="section-num">Category II</span>
-    <h2 class="section-title">Things the Draft Left Out</h2>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>The most direct evidence on question two was missing</h4></div><p>The draft had no Locke, so the philosophical root of "I made it, so it is mine" was absent. It had no developmental work, so it missed the finding that preschoolers assign ownership by creative labour, more strongly than adults do. It had no capuchin or child endowment-effect results, which show ownership feelings predate culture.</p><p class="fix"><b>Changed</b> All three added to Sections II and IV and to the summary card.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>Startups were in the question and nowhere in the answer</h4></div><p>The draft never engaged the entrepreneurship literature: founder passion, the "my baby" metaphor, identity-centred passion.</p><p class="fix"><b>Changed</b> A founders paragraph added to Section IV with the Cardon papers.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>Nonhuman creation was ignored</h4></div><p>Capuchins, chimpanzees and crows make tools. Capuchins produce stone flakes by accident, which is the strongest argument against the Lomekwi find and against any specifically human "drive to create." The draft never asked what is distinctive.</p><p class="fix"><b>Changed</b> Section I reframed around what is distinctive.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The music-evolution debate was twenty-five years stale</h4></div><p>The draft presented Miller (2000) versus Pinker (1997) as the open question. The current contest is social bonding versus credible signalling, both published in 2021.</p><p class="fix"><b>Changed</b> Both added. Zahavi's handicap principle is now marked as itself contested.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The SDT-versus-TMT "unresolved tension" was a published debate</h4></div><p>The draft presented approach-versus-avoidance as something "the field hasn't resolved," as though nobody had tried. Pyszczynski et al. and Ryan and Deci argued it directly in the same 2004 issue of Psychological Bulletin.</p><p class="fix"><b>Changed</b> The exchange is cited.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The archaeology was outdated and Neanderthals were absent</h4></div><p>Blombos and Chauvet are no longer the interesting cases. Sulawesi, the Spanish Neanderthal marks and the Trinil shell all bear on whether the drive is a <em>sapiens</em> story.</p><p class="fix"><b>Changed</b> Added, with the Neanderthal dating marked as disputed.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The legacy motive had a better-supported account than TMT</h4></div><p>Generativity (Erikson, McAdams) is a measured, non-defensive account of wanting one's creations to persist. The draft used only TMT.</p><p class="fix"><b>Changed</b> Generativity card added ahead of TMT.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>Legal and psychological ownership were conflated in the section meant to separate them</h4></div><p>Open-source developers and ghostwriters were given as "creation without ownership." They usually have strong psychological ownership; what they lack is legal title.</p><p class="fix"><b>Changed</b> Section IV now leads with the distinction.</p></div>
-  </div>
-
-  <div class="section-block">
-    <span class="section-num">Category III</span>
-    <h2 class="section-title">Problems With the Draft's Own Audit</h2>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>It claimed fixes that were not in the text</h4></div><p>The draft's verdict said the revision "added boundary conditions for the endowment effect." The research tab mentioned the endowment effect once, in passing, with no boundary conditions and no citation. A "non-Western frameworks" gap rated High was declared fixed by four sentences, one of which was wrong.</p><p class="fix"><b>Changed</b> The endowment effect has its own card with both sides of the Plott-Zeiler dispute. The non-Western section is rewritten.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>It graded a document the reader could not see</h4></div><p>Every item critiqued "the original," and the visible text was the revision. A reader had no way to check whether the criticisms were fair or the fixes real. The audit functioned as a signal of rigour rather than a check on it.</p><p class="fix"><b>Changed</b> This log states what was wrong and what was changed, and the "still weak" section below applies to the page you are reading.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>It found no factual errors</h4></div><p>Its "Factual &amp; Attribution Issues" category contained only framing complaints. Zero wrong dates, zero misattributions. Category I above lists seven.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>It softened the TMT problem while appearing to sharpen it</h4></div><p>The draft's audit said Many Labs 4 tested worldview defence, not legacy, implying the creation claim was untouched. The creation claim rests on the same mortality-salience paradigm, so it inherits the failure rather than escaping it.</p><p class="fix"><b>Changed</b> Stated in the TMT card.</p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>"Authority by accumulation" was named as a flaw and then made worse</h4></div><p>The draft's audit complained that stacking references masks weak claims, and the revision responded by adding more names. This version adds more still. The mitigation is that every name now links to a source and carries a confidence label, so the reader can weigh rather than count.</p></div>
-  </div>
-
-  <div class="section-block">
-    <span class="section-num">Category IV</span>
-    <h2 class="section-title">Still Weak in This Version</h2>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The cross-cultural evidence on ownership is thin</h4></div><p>The labour-makes-ownership rule has been tested in the UK, Japan and a few other samples. Most of the IKEA-effect and psychological-ownership work is on WEIRD samples (<span class="researcher">Henrich, Heine &amp; Norenzayan</span> <a class="cite" href="#ref-henrich2010">2010</a>). The page says the effect "generalises" more confidently than two cultures warrant.</p><p class="fix"><b class="open">Open</b></p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The Henrich tension is stated, not resolved</h4></div><p>Section I says the collective-brain view is in tension with individual-level accounts and that the two are "not simply additive." That is true and it is also a way of declining to pick. A stronger page would say which level the two questions are really asking about.</p><p class="fix"><b class="open">Open</b></p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>The non-Western traditions are still one paragraph</h4></div><p>The section is now accurate and no longer framed as East versus West, but a paragraph is not engagement. Someone who knows the Gita commentarial tradition or Zen accounts of craft would find it thin.</p><p class="fix"><b class="open">Open</b></p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>The destruction aside has no evidence behind it</h4></div><p>It now says so. It could be cut.</p><p class="fix"><b class="open">Open</b></p></div>
-
-    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>Sources were checked against memory and a small number of lookups, not read in full</h4></div><p>Dates, venues and DOIs were verified for the sources marked with links. Characterisations of what each paper found are from the reviewer's knowledge of the literature and could be wrong in detail. Corrections welcome.</p><p class="fix"><b class="open">Open</b></p></div>
-  </div>
-
-</div>
-</div>
-
 <div class="panel sources" id="panel-sources" role="tabpanel" aria-labelledby="tab-sources">
 <div class="content-wrap">
   <div class="section-block">
@@ -693,10 +266,13 @@
 </div>
 </div>
 
-<div class="footer">Evolutionary Biology · Psychology · Archaeology · Philosophy<br>Drafted with Claude, fact-checked and rewritten September 2026 · Corrections: open an issue on the repository</div>
+<div class="footer">
+  <div class="footer-links"><a href="review.html">Review Log: what the first draft got wrong</a></div>
+  Evolutionary Biology · Psychology · Archaeology · Philosophy<br>Drafted with Claude, fact-checked and rewritten September 2026 · Corrections: open an issue on the repository
+</div>
 
 <script>
-  var TABS = ['research', 'audit', 'sources'];
+  var TABS = ['research', 'sources'];
 
   function switchTab(tab, scroll) {
     if (TABS.indexOf(tab) === -1) tab = 'research';
@@ -718,6 +294,7 @@
   (function () {
     var h = location.hash.replace('#', '');
     if (!h) return;
+    if (h === 'audit') { location.replace('review.html'); return; }
     if (TABS.indexOf(h) !== -1) { switchTab(h, true); return; }
     if (h.indexOf('ref-') === 0) { switchTab('sources', false); }
     var el = document.getElementById(h);

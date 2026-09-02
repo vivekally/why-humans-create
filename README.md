@@ -7,4 +7,4 @@ A research-grounded answer to two questions, with sources and a review log:
 
 Live: https://vivekally.github.io/why-humans-create/
 
-Single-file site (`index.html`), no build step. Drafted with Claude, then independently fact-checked and rewritten. The Review Log tab lists what the first draft got wrong, what changed, and what is still weak. Corrections welcome as issues.
+Static site (`index.html`, `review.html`, `style.css`), no build step. Drafted with Claude, then independently fact-checked and rewritten. The [Review Log](https://vivekally.github.io/why-humans-create/review.html) lists what the first draft got wrong, what changed, and what is still weak. Corrections welcome as issues.
