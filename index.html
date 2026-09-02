@@ -283,7 +283,7 @@
       btn.setAttribute('aria-selected', on ? 'true' : 'false');
       panel.classList.toggle('active', on);
     });
-    if (history.replaceState) history.replaceState(null, '', '#' + tab);
+    if (scroll !== false && history.replaceState) history.replaceState(null, '', '#' + tab);
     if (scroll !== false) {
       var top = document.getElementById('main').getBoundingClientRect().top + window.pageYOffset;
       if (scroll === true || window.pageYOffset > top) window.scrollTo(0, top);
