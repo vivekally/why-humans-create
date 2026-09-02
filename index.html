@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Humans Create: A Multidisciplinary Inquiry</title>
+<meta name="description" content="A research-grounded answer to two questions: why humans have such a deep drive to create, and why ownership over what we create feels so powerful. With sources, confidence labels, and a review log.">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #e2ded6;
+    --paper: #080808;
+    --accent: #d4714f;
+    --accent-light: #e8956e;
+    --muted: #8a847b;
+    --text-body: #a39d94;
+    --text-card: #8f897f;
+    --section-bg: #0e0e0e;
+    --card-bg: #131313;
+    --border: #1e1c1a;
+    --shadow: rgba(0, 0, 0, 0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.72;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-light); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+    background: #030303;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 700px 500px at 25% 35%, rgba(212, 113, 79, 0.08), transparent),
+      radial-gradient(ellipse 500px 500px at 75% 65%, rgba(232, 213, 160, 0.03), transparent);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+    position: relative; z-index: 1;
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(42px, 7vw, 96px);
+    color: #f0ece4;
+    line-height: 1.08;
+    max-width: 800px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+    position: relative; z-index: 1;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--accent-light); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(226, 222, 214, 0.62);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+    position: relative; z-index: 1;
+  }
+
+  .hero-prov {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 1px;
+    color: rgba(226, 222, 214, 0.5);
+    max-width: 560px; line-height: 1.8;
+    margin-bottom: 44px;
+    opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
+    position: relative; z-index: 1;
+  }
+
+  .hero-nav {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards;
+    position: relative; z-index: 1;
+  }
+
+  .hero-nav a, .hero-nav button {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    text-decoration: none; color: #f0ece4; background: none; cursor: pointer;
+    padding: 14px 28px;
+    border: 1px solid rgba(226, 222, 214, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .hero-nav a:hover, .hero-nav button:hover { background: var(--accent); border-color: var(--accent); }
+  .hero-nav .primary { background: var(--accent); border-color: var(--accent); }
+  .hero-nav .primary:hover { background: var(--accent-light); border-color: var(--accent-light); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-label, .hero h1, .hero-sub, .hero-prov, .hero-nav { animation: none; opacity: 1; }
+  }
+
+  /* TLDR */
+  .tldr-section {
+    background: linear-gradient(180deg, #030303, #060606 40%, var(--paper) 100%);
+    padding: 80px 24px 72px;
+  }
+
+  .tldr-inner {
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+  }
+
+  .tldr-label {
+    grid-column: 1 / -1; text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 12px;
+  }
+
+  .tldr-card {
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid rgba(226, 222, 214, 0.08);
+    padding: 36px 32px; position: relative;
+  }
+
+  .tldr-card .tldr-q-num {
+    font-family: 'Instrument Serif', serif; font-size: 52px;
+    color: rgba(212, 113, 79, 0.14);
+    position: absolute; top: 14px; right: 24px; line-height: 1;
+  }
+
+  .tldr-card h3 {
+    font-family: 'Instrument Serif', serif; font-size: 22px;
+    color: #f0ece4; line-height: 1.25; margin-bottom: 18px; max-width: 88%;
+  }
+
+  .tldr-card p {
+    font-size: 14.5px; line-height: 1.78;
+    color: rgba(226, 222, 214, 0.62); margin-bottom: 14px;
+  }
+  .tldr-card p:last-child { margin-bottom: 0; }
+  .tldr-card p strong { color: rgba(226, 222, 214, 0.9); font-weight: 500; }
+
+  .confidence {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    border-top: 1px solid rgba(226, 222, 214, 0.08); padding-top: 12px; margin-top: 16px;
+  }
+  .confidence b { color: #d4a94e; font-weight: 500; }
+
+  @media (max-width: 720px) {
+    .tldr-inner { grid-template-columns: 1fr; }
+    .tldr-section { padding: 60px 18px 48px; }
+    .tldr-card { padding: 28px 24px; }
+  }
+
+  /* TABS */
+  .tab-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(8, 8, 8, 0.88);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: center; padding: 0 24px;
+  }
+
+  .tab-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    background: none; border: none; color: var(--muted);
+    padding: 20px 28px; cursor: pointer; position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .tab-btn::after {
+    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 0; height: 2px; background: var(--accent); transition: width 0.3s ease;
+  }
+
+  .tab-btn[aria-selected="true"] { color: var(--ink); }
+  .tab-btn[aria-selected="true"]::after { width: 60%; }
+  .tab-btn:hover { color: var(--ink); }
+
+  /* CONTENT */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .content-wrap { max-width: 760px; margin: 0 auto; padding: 64px 24px 120px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); display: block; margin-bottom: 12px;
+  }
+
+  h2.section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(30px, 4.5vw, 42px); line-height: 1.15;
+    margin-bottom: 32px; color: #f0ece4;
+  }
+
+  h3.sub-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px; line-height: 1.3; margin: 40px 0 16px; color: #ddd8d0;
+  }
+
+  .section-block { margin-bottom: 64px; padding-top: 32px; }
+  .section-block + .section-block { border-top: 1px solid var(--border); }
+
+  p { margin-bottom: 20px; color: var(--text-body); font-weight: 400; }
+  ul.plain { margin: 0 0 20px 22px; color: var(--text-body); }
+  ul.plain li { margin-bottom: 10px; }
+
+  /* LEGEND */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 0 0 36px;
+    padding: 18px 22px; border: 1px solid var(--border); background: var(--section-bg);
+  }
+  .legend .legend-title {
+    flex-basis: 100%; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
+  }
+  .legend span.tag { font-size: 13px; color: var(--text-body); }
+  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; margin-right: 8px; }
+  .tag-empirical { background: #142614; color: #7ec472; }
+  .tag-theory { background: #12202a; color: #6fb2d4; }
+  .tag-contested { background: #2e1410; color: #e8856e; }
+  .tag-historical { background: #24201a; color: #c9b184; }
+
+  /* CONCEPT CARDS */
+  .concept-card {
+    background: var(--card-bg); border-left: 3px solid var(--accent);
+    padding: 24px 28px; margin: 28px 0; box-shadow: 0 2px 16px var(--shadow);
+  }
+
+  .concept-card .card-label { margin-bottom: 10px; }
+
+  .concept-card .card-title {
+    font-family: 'Instrument Serif', serif; font-size: 20px;
+    margin-bottom: 8px; color: #ddd8d0;
+  }
+
+  .concept-card p { font-size: 15px; margin-bottom: 12px; color: var(--text-card); }
+  .concept-card p:last-child { margin-bottom: 0; }
+
+  /* TENSION CALLOUT */
+  .tension-box {
+    background: linear-gradient(135deg, #0d0c0a, #12100e);
+    border: 1px solid var(--border); padding: 28px 32px; margin: 32px 0;
+    position: relative;
+  }
+
+  .tension-box .tension-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px;
+  }
+
+  .tension-box p { font-size: 15.5px; margin-bottom: 12px; color: var(--text-body); }
+  .tension-box p:last-child { margin-bottom: 0; }
+
+  .researcher { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--accent); }
+  a.cite { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  a.cite:hover { color: var(--accent-light); border-bottom-color: var(--accent-light); }
+  strong { font-weight: 600; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* REVIEW LOG */
+  .audit-item {
+    background: var(--card-bg); border: 1px solid var(--border);
+    margin: 24px 0; box-shadow: 0 1px 8px var(--shadow); padding: 20px 24px;
+  }
+  .audit-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .audit-severity {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 2px; flex-shrink: 0; margin-top: 3px;
+  }
+  .severity-high { background: #2e1410; color: #e8856e; }
+  .severity-med { background: #2a2010; color: #d4a94e; }
+  .severity-low { background: #142614; color: #7ec472; }
+  .audit-head h4 { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500; color: #ccc8c0; line-height: 1.4; }
+  .audit-item p { font-size: 15px; margin-bottom: 10px; }
+  .audit-item p:last-child { margin-bottom: 0; }
+  .audit-item .fix { color: var(--text-card); }
+  .audit-item .fix b { color: #7ec472; font-weight: 500; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-right: 6px; }
+  .audit-item .fix b.open { color: #d4a94e; }
+
+  .aside-note {
+    font-size: 14px; color: var(--muted);
+    border-left: 2px solid var(--border); padding-left: 16px;
+    margin: 24px 0; font-style: italic;
+  }
+
+  /* SOURCES */
+  .sources ol { margin: 0 0 0 22px; color: var(--text-body); font-size: 14.5px; }
+  .sources li { margin-bottom: 12px; line-height: 1.6; }
+  .sources li:target { background: rgba(212, 113, 79, 0.08); outline: 1px solid rgba(212,113,79,0.3); padding: 4px 8px; }
+  .sources a { color: var(--accent-light); text-decoration: none; border-bottom: 1px dotted var(--accent-light); word-break: break-all; }
+
+  .progress-track { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200; }
+  .progress-fill { height: 100%; width: 0%; background: var(--accent); transition: width 0.1s linear; }
+
+  .footer {
+    text-align: center; padding: 48px 24px; border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+    line-height: 2.2;
+  }
+
+  @media (max-width: 640px) {
+    .content-wrap { padding: 40px 18px 80px; }
+    .tab-btn { padding: 16px 14px; font-size: 10px; letter-spacing: 1.5px; }
+    .concept-card { padding: 20px; }
+    .tension-box { padding: 24px 20px; }
+    .hero-nav a, .hero-nav button { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+
+<section class="hero">
+  <span class="hero-label">A Multidisciplinary Inquiry</span>
+  <h1>Why Do Humans <em>Create?</em></h1>
+  <p class="hero-sub">Two questions: why the drive to build things runs so deep, and why what we build feels so much like <em>ours</em>. An answer drawn from evolutionary biology, psychology, archaeology and philosophy, with the seams left showing.</p>
+  <p class="hero-prov">Drafted with an AI model from a two-question prompt, then rewritten after an independent fact-check. Every claim links to a source. The Review Log lists what the first draft got wrong and what is still weak.</p>
+  <div class="hero-nav">
+    <button class="primary" type="button" onclick="switchTab('research', true)">Read the Answer</button>
+    <button type="button" onclick="switchTab('audit', true)">Read the Review Log</button>
+  </div>
+</section>
+
+<section class="tldr-section">
+  <div class="tldr-inner">
+    <div class="tldr-label">The Short Answers</div>
+    <div class="tldr-card">
+      <span class="tldr-q-num" aria-hidden="true">Q1</span>
+      <h3>Why do humans have such a deep drive to create?</h3>
+      <p>Making things is older than our species. Stone tools appear at least 2.6 million years ago and possibly 3.3 million, and other primates flake stone too. What is distinctive about humans is less raw inventiveness than <strong>cumulative culture</strong>: we copy, teach and improve on what earlier generations built, so creation compounds.</p>
+      <p>At the individual level, creating satisfies the three needs Self-Determination Theory calls <strong>autonomy, competence and relatedness</strong>, and it reliably produces absorbed, high-concentration states (flow). Flow is not the same as feeling happy in the moment. People are in flow more often at work than at leisure and still say they would rather be elsewhere.</p>
+      <p>Why the drive exists at the deepest level is unsettled. Sexual selection (Miller), cognitive byproduct (Pinker), social bonding and credible signalling (the current debate in music evolution) all remain live.</p>
+      <div class="confidence">Confidence: <b>moderate</b> on the archaeology and psychology, <b>low</b> on any single evolutionary explanation</div>
+    </div>
+    <div class="tldr-card">
+      <span class="tldr-q-num" aria-hidden="true">Q2</span>
+      <h3>Why does ownership over what we create feel so powerful?</h3>
+      <p>The idea that labour makes something yours is old (Locke, 1689) and shows up early in development: <strong>preschoolers transfer ownership to whoever put creative work into an object</strong>, more strongly than adults do (Kanngiesser et al.). Adults overvalue what they assembled themselves even when it is worse (the <strong>IKEA effect</strong>), and the endowment effect appears in young children and in capuchin monkeys.</p>
+      <p>Pierce and colleagues' theory of psychological ownership names three routes to feeling something is "mine": controlling it, investing yourself in it, knowing it intimately. Creating does all three. Legacy motives (generativity, and in a more contested form Terror Management Theory) add an existential layer.</p>
+      <p>Whether this attachment is good for you is a separate question. The Gita's counsel to act without attachment to the fruits of action and the Buddhist warning against clinging are answers, not just alternatives.</p>
+      <div class="confidence">Confidence: <b>high</b> that labour drives ownership feelings, <b>low</b> on the death-anxiety account</div>
+    </div>
+  </div>
+</section>
+
+<div class="tab-bar" id="main" role="tablist" aria-label="Page sections">
+  <button class="tab-btn" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="true" onclick="switchTab('research')">The Answer</button>
+  <button class="tab-btn" role="tab" id="tab-audit" aria-controls="panel-audit" aria-selected="false" onclick="switchTab('audit')">Review Log</button>
+  <button class="tab-btn" role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" onclick="switchTab('sources')">Sources</button>
+</div>
+
+<div class="panel active" id="panel-research" role="tabpanel" aria-labelledby="tab-research">
+<div class="content-wrap">
+
+  <div class="legend" aria-label="How to read the labels">
+    <span class="legend-title">How to read the labels</span>
+    <span class="tag"><span class="tag tag-empirical">Empirical</span>Tested experimentally or in large datasets, with replications</span>
+    <span class="tag"><span class="tag tag-theory">Theory</span>A framework that organises evidence but has not itself been tested as a whole</span>
+    <span class="tag"><span class="tag tag-contested">Contested</span>Serious published challenges to the core claim</span>
+    <span class="tag"><span class="tag tag-historical">Historical</span>Philosophical or historical, not evidential</span>
+  </div>
+
+  <div class="section-block" id="s1">
+    <span class="section-num">Section I</span>
+    <h2 class="section-title">The Evolutionary Roots: Creation Before <em>Homo sapiens</em></h2>
+    <p>The archaeological record ties making things to deep time. The Lomekwi 3 stone tools in Kenya, dated by <span class="researcher">Harmand et al.</span> <a class="cite" href="#ref-harmand2015">(2015)</a> to roughly 3.3 million years ago, predate the genus <em>Homo</em>. The finding is contested. Critics have questioned the stratigraphic context, and <span class="researcher">Proffitt et al.</span> <a class="cite" href="#ref-proffitt2016">(2016)</a> showed that wild capuchin monkeys produce sharp-edged flakes unintentionally while pounding stones, which blurs the line between "tool" and "debris." The less disputed Oldowan tools from Gona, Ethiopia (<span class="researcher">Semaw et al.</span> <a class="cite" href="#ref-semaw1997">1997</a>, about 2.6 million years) still put deliberate making far before anything resembling modern cognition.</p>
+    <p>That capuchin result matters for the question itself. Chimpanzees, crows and capuchins all make and use tools. So "why do humans create?" cannot be answered by pointing at creation. The useful question is what is different about human creation, and the strongest candidate answer is not individual inventiveness.</p>
+    <div class="tension-box">
+      <div class="tension-label">The Collective Brain</div>
+      <p><span class="researcher">Joseph Henrich</span> (<em>The Secret of Our Success</em>, <a class="cite" href="#ref-henrich2015">2015</a>) and <span class="researcher">Michael Tomasello</span> (<em>The Cultural Origins of Human Cognition</em>, <a class="cite" href="#ref-tomasello1999">1999</a>) argue that what makes human creation distinctive is <strong>cumulative cultural evolution</strong>: high-fidelity social learning that lets innovations ratchet upward across generations. Henrich goes further than "in addition to": he argues individual humans are not especially clever inventors, and that most technology emerges from many small, often unintended improvements accumulating across a population. On that view the drive to <em>learn, imitate and teach</em> does most of the work, and a strong individual "drive to create" is partly an illusion produced by looking at the finished artefact.</p>
+      <p>This is in tension with everything below that locates the drive inside the individual. It is not resolved here. Both can be true at different levels, but they are not simply additive.</p>
+    </div>
+    <p>More contested is why humans create things with no <em>obvious</em> survival utility: art, music, ornament. "Obvious" is doing work in that sentence, because the assumption that these are non-functional may itself be wrong.</p>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-contested">Contested</span></div>
+      <div class="card-title">Sexual Selection and The Mating Mind</div>
+      <p><span class="researcher">Geoffrey Miller</span> <a class="cite" href="#ref-miller2000">(2000)</a> argued that creativity functions as a costly signal of genetic fitness, analogous to the peacock's tail, under <span class="researcher">Amotz Zahavi</span>'s <a class="cite" href="#ref-zahavi1975">(1975)</a> handicap principle: signals are reliable because they are expensive.</p>
+      <p>Two problems. The handicap principle itself has been under sustained attack; <span class="researcher">Penn &amp; Számadó</span> <a class="cite" href="#ref-penn2020">(2020)</a> argue it was elevated to a "principle" on flawed grounds and that cost is neither necessary nor sufficient for honest signalling. And Miller's theory predicts sex differences in creative display whose size and interpretation are disputed.</p>
+    </div>
+    <p><span class="researcher">Steven Pinker</span> (<em>How the Mind Works</em>, <a class="cite" href="#ref-pinker1997">1997</a>) took the skeptical view, calling music "auditory cheesecake": a byproduct of systems evolved for language, auditory scene analysis, emotional calls, habitat selection and motor control, rather than an adaptation in its own right.</p>
+    <p>The Miller-versus-Pinker framing is now a quarter-century old and the field has moved. The current debate in music evolution is between a <strong>social bonding</strong> account (<span class="researcher">Savage et al.</span> <a class="cite" href="#ref-savage2021">2021</a>) and a <strong>credible signalling</strong> account (<span class="researcher">Mehr et al.</span> <a class="cite" href="#ref-mehr2021">2021</a>), both published as target articles in the same journal issue. Neither is sexual selection and neither is cheesecake. Decisive evidence does not yet exist for any of the four.</p>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-theory">Theory</span></div>
+      <div class="card-title">Niche Construction</div>
+      <p><span class="researcher">Odling-Smee, Laland &amp; Feldman</span> <a class="cite" href="#ref-odlingsmee2003">(2003)</a>: organisms modify environments, and those modifications change selection pressures on subsequent generations. Humans are the most dramatic niche constructors on earth, locked into a loop where creation begets dependence on creation.</p>
+    </div>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-theory">Theory</span></div>
+      <div class="card-title">Extended Phenotype, and Its Limit</div>
+      <p><span class="researcher">Richard Dawkins</span> <a class="cite" href="#ref-dawkins1982">(1982)</a>: genes express themselves not only in bodies but in what organisms build. A beaver's dam is as much a product of its genome as its teeth.</p>
+      <p>Dawkins restricted the idea to artefacts whose variation is under genetic influence, and explicitly routed human culture through a different replicator, the meme. Calling a startup or a symphony an "extended phenotype" is a metaphor he would reject. The concept explains why building is in our nature; it does not explain what we build.</p>
+    </div>
+  </div>
+
+  <div class="section-block" id="s2">
+    <span class="section-num">Section II</span>
+    <h2 class="section-title">The Psychology: Why We Create and Why We Cling</h2>
+    <h3 class="sub-title">The Drive to Create</h3>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-theory">Theory</span><span class="tag tag-empirical">Empirical</span></div>
+      <div class="card-title">Self-Determination Theory (SDT)</div>
+      <p><span class="researcher">Deci &amp; Ryan</span> <a class="cite" href="#ref-deci1985">(1985; Ryan &amp; Deci 2000)</a> identify three basic needs: autonomy, competence and relatedness. Creative work is a natural setting for all three, though "creation satisfies all three" is an application of the theory, not a finding of it.</p>
+      <p>The part of this literature most relevant to startups and to ownership is the <strong>overjustification effect</strong>: external rewards can undermine intrinsic motivation (<span class="researcher">Deci, Koestner &amp; Ryan</span> <a class="cite" href="#ref-deci1999">1999</a> meta-analysis; <span class="researcher">Amabile</span> <a class="cite" href="#ref-amabile1996">1996</a> on creativity specifically). The size and generality of that effect were disputed in a long exchange with Cameron and Pierce in the 1990s, so it is best read as real but conditional.</p>
+    </div>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-theory">Theory</span><span class="tag tag-empirical">Empirical</span></div>
+      <div class="card-title">Flow</div>
+      <p><span class="researcher">Mihaly Csikszentmihalyi</span> <a class="cite" href="#ref-csik1990">(1990)</a>: total absorption in a challenging-but-achievable task. Experience-sampling studies reliably find flow associated with high concentration, challenge and a sense of skill.</p>
+      <p>Flow is <em>not</em> reliably associated with feeling happy in the moment. <span class="researcher">Csikszentmihalyi &amp; LeFevre</span> <a class="cite" href="#ref-csik1989">(1989)</a> found people were in flow far more often at work than in leisure, yet reported wanting to be doing something else while at work. They called this the paradox of work. Any claim that creating is "one of the most reliable sources of happiness" overreads this literature.</p>
+    </div>
+    <div class="aside-note">The creation–wellbeing link is not uniformly positive. <span class="researcher">Kyaga et al.</span> <a class="cite" href="#ref-kyaga2011">(2011)</a> found that people with bipolar disorder, and healthy siblings of people with schizophrenia or bipolar disorder, were over-represented in creative occupations in Swedish registry data; a 2013 follow-up on 1.2 million people found the association held mainly for authors. These are occupational associations, not evidence that the drive is compulsive. The broader "mad genius" literature is heavily contested (<span class="researcher">Schlesinger</span> <a class="cite" href="#ref-schlesinger2009">2009</a>) and effect sizes are small.</div>
+    <h3 class="sub-title">The Attachment to What We've Created</h3>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-empirical">Empirical</span></div>
+      <div class="card-title">Creative Labour and Ownership in Children</div>
+      <p><span class="researcher">Kanngiesser, Gjersoe &amp; Hood</span> <a class="cite" href="#ref-kanngiesser2010">(2010)</a>: when one person borrows another's modelling clay and sculpts it into something new, both preschoolers and adults tend to say the sculptor now owns it. Holding the object or making small changes does not have this effect. The effect was <em>stronger</em> in children than in adults. A follow-up in Japan and the UK (<a class="cite" href="#ref-kanngiesser2014">2014</a>) found the labour rule in both cultures, with differences in how strongly it overrode prior ownership.</p>
+      <p>This is the most direct evidence on the second question: the feeling that creative work makes something yours appears early, before formal instruction in property, and across at least two quite different cultures.</p>
+    </div>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-empirical">Empirical</span></div>
+      <div class="card-title">The IKEA Effect</div>
+      <p><span class="researcher">Norton, Mochon &amp; Ariely</span> <a class="cite" href="#ref-norton2012">(2012)</a>: people value self-assembled objects more than identical objects assembled by others, and value their own amateur origami close to what experts' work fetches, while other people rate it near worthless. The authors link this to effectance motivation (<span class="researcher">Robert White</span> <a class="cite" href="#ref-white1959">1959</a>). Boundary conditions from the same paper: the effect disappears when participants fail to complete the object or when it is disassembled. The effect has replicated in adults and in children.</p>
+    </div>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-empirical">Empirical</span><span class="tag tag-contested">Contested</span></div>
+      <div class="card-title">The Endowment Effect</div>
+      <p>Owning a thing raises what you demand to give it up (<span class="researcher">Thaler</span> <a class="cite" href="#ref-thaler1980">1980</a>; <span class="researcher">Kahneman, Knetsch &amp; Thaler</span> <a class="cite" href="#ref-kkt1990">1990</a>). It appears in young children and in capuchin monkeys (<span class="researcher">Lakshminarayanan, Chen &amp; Santos</span> <a class="cite" href="#ref-santos2008">2008</a>), which suggests ownership feelings predate language and culture.</p>
+      <p><span class="researcher">Plott &amp; Zeiler</span> <a class="cite" href="#ref-plott2005">(2005)</a> argued the gap largely vanishes under procedures that remove subject misconceptions. <span class="researcher">Isoni, Loomes &amp; Sugden</span> <a class="cite" href="#ref-isoni2011">(2011)</a> replicated their procedures and found the gap persists for lotteries. Read it as real but more context-dependent than the textbook version.</p>
+    </div>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-theory">Theory</span></div>
+      <div class="card-title">Psychological Ownership</div>
+      <p><span class="researcher">Pierce, Kostova &amp; Dirks</span> <a class="cite" href="#ref-pierce2001">(2001</a>, <a class="cite" href="#ref-pierce2003">2003)</a> propose three routes to feeling something is "mine": controlling it, investing yourself in it, and coming to know it intimately. These are theory papers; the measurement work came later. That creation engages all three routes at once is a plausible application of the model, and the Kanngiesser and IKEA results are consistent with it, but "attachment to made things surpasses attachment to bought things" has not been tested as such.</p>
+    </div>
+    <h3 class="sub-title">The Existential Dimension</h3>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-theory">Theory</span></div>
+      <div class="card-title">Generativity and Legacy</div>
+      <p><span class="researcher">Erikson</span> <a class="cite" href="#ref-erikson1950">(1950)</a> named generativity, the midlife concern with creating and guiding what will outlast you, as a developmental task. <span class="researcher">McAdams &amp; de St. Aubin</span> <a class="cite" href="#ref-mcadams1992">(1992)</a> built a measure and found it predicts creative and civic behaviour. This is the less dramatic, better-supported account of why we want our creations to persist.</p>
+    </div>
+    <div class="concept-card">
+      <div class="card-label"><span class="tag tag-contested">Contested</span></div>
+      <div class="card-title">Terror Management Theory (TMT)</div>
+      <p><span class="researcher">Greenberg, Pyszczynski &amp; Solomon</span> <a class="cite" href="#ref-greenberg1986">(1986)</a>, building on <span class="researcher">Ernest Becker</span>'s <em>The Denial of Death</em> <a class="cite" href="#ref-becker1973">(1973)</a>: awareness of mortality creates anxiety managed through cultural worldviews and self-esteem, and creation offers symbolic immortality.</p>
+      <p>The core experimental paradigm, mortality salience producing worldview defence, failed to replicate in Many Labs 4 (<span class="researcher">Klein et al.</span> <a class="cite" href="#ref-klein2022">2022</a>, preprint 2019), with and without original-author involvement. The creation-as-immortality claim was not directly tested there, but it rests on the same paradigm, so it inherits the problem rather than escaping it.</p>
+    </div>
+    <div class="tension-box">
+      <div class="tension-label">A Known Debate, Not a New One</div>
+      <p>SDT frames creation as <strong>approach-motivated</strong> (toward growth). TMT frames it as <strong>avoidance-motivated</strong> (away from death anxiety). These were argued directly against each other in the same journal issue: <span class="researcher">Pyszczynski et al.</span> <a class="cite" href="#ref-pyszczynski2004">(2004)</a> claimed TMT explains why SDT's needs exist, and <span class="researcher">Ryan &amp; Deci</span> <a class="cite" href="#ref-ryan2004">(2004)</a> replied that meaning-seeking cannot be reduced to defence, and that esteem built on defence is contingent esteem, not the real thing. Twenty years on, the replication record has weakened the TMT side without settling the question.</p>
+    </div>
+  </div>
+
+  <div class="section-block" id="s3">
+    <span class="section-num">Section III</span>
+    <h2 class="section-title">The Anthropological and Historical Record</h2>
+    <p>The Blombos Cave engraved ochre in South Africa (about 75,000 years, <span class="researcher">Henshilwood et al.</span> <a class="cite" href="#ref-henshilwood2002">2002</a>; a crosshatched drawing at 73,000 years, <a class="cite" href="#ref-henshilwood2018">2018</a>) and the Chauvet paintings in France (about 36,000 years, <span class="researcher">Quiles et al.</span> <a class="cite" href="#ref-quiles2016">2016</a>) are the textbook cases of early symbolic making. The record has moved past them in ways that bear on the question:</p>
+    <ul class="plain">
+      <li>Figurative cave art in Sulawesi, Indonesia, is now dated to at least 51,000 years (<span class="researcher">Oktaviana et al.</span> <a class="cite" href="#ref-oktaviana2024">2024</a>), older than anything in Europe.</li>
+      <li>Red pigment marks in three Spanish caves have been dated to roughly 64,000 years, before <em>Homo sapiens</em> reached Iberia, and attributed to Neanderthals (<span class="researcher">Hoffmann et al.</span> <a class="cite" href="#ref-hoffmann2018">2018</a>). The dating is disputed (<span class="researcher">White et al.</span> <a class="cite" href="#ref-white2020">2020</a>). If it holds, the drive to mark and decorate is not a <em>sapiens</em> story.</li>
+      <li>A zigzag engraved on a freshwater shell at Trinil, Java, is around half a million years old and attributed to <em>Homo erectus</em> (<span class="researcher">Joordens et al.</span> <a class="cite" href="#ref-joordens2014">2014</a>).</li>
+    </ul>
+    <p>We should be cautious about reading any of these through modern categories. We do not know whether they served communicative, ritual or mnemonic functions that were directly useful.</p>
+    <p><span class="researcher">Donald Brown</span>'s list of <strong>human universals</strong> <a class="cite" href="#ref-brown1991">(1991)</a> includes toolmaking, art, music, body adornment, narrative and play. It also includes <strong>property</strong> and inheritance rules, which bears on the second question. The list is a compilation from the ethnographic record rather than a systematic survey, so "in every documented culture" should be read as "no documented exception," which is weaker.</p>
+    <div class="tension-box">
+      <div class="tension-label">Attachment Is Not Only Questioned Outside the West</div>
+      <p>The psychological literature above mostly assumes that attachment to one's creations is natural and, implicitly, healthy. Several traditions treat that as the problem. The <em>Bhagavad Gita</em> (<a class="cite" href="#ref-gita">2.47</a>) counsels <em>nishkama karma</em>: you have a right to your work but never to its fruits, and acting for the fruits is the trap. Buddhist thought names <em>upadana</em>, clinging, as a link in the chain that produces suffering. The Daoist <em>wu wei</em> (<span class="researcher">Slingerland</span> <a class="cite" href="#ref-slingerland2014">2014</a> is a good modern treatment) prizes effortless action over striving. Stoic and Christian ascetic traditions say similar things in different vocabulary, so this is not a West-versus-East divide. It is a divide between a descriptive psychology of attachment and prescriptive traditions that say the attachment should be loosened.</p>
+      <p>These traditions do not deny the attachment exists. They are evidence that people in very different cultures noticed it, found it strong, and built practices to manage it.</p>
+    </div>
+    <p>The legal notion of individual intellectual property is usually dated to the Statute of Anne <a class="cite" href="#ref-anne1710">(1710)</a>, though Venice granted patents from 1474 and the Roman poet Martial was complaining about plagiarism in the first century. Legal ownership of creations is recent; the felt claim is not. <span class="researcher">Karl Marx</span>'s theory of <strong>alienation</strong> <a class="cite" href="#ref-marx1844">(1844)</a> argued that separating workers from the products of their labour is damaging. That narrow claim is consistent with psychological ownership research; Marx's broader claims about class and species-being have no experimental parallel.</p>
+    <p><span class="researcher">Lewis Mumford</span>, in <em>Technics and Civilization</em> <a class="cite" href="#ref-mumford1934">(1934)</a>, traced how technical phases reshape the relationship between makers and their work, including the shift from craft to mechanised production. Reading modern startup culture as an attempt to reunify identity with creation is a natural extension of that argument, but it is ours, not his.</p>
+  </div>
+
+  <div class="section-block" id="s4">
+    <span class="section-num">Section IV</span>
+    <h2 class="section-title">Creating vs. Owning: Pulling Them Apart</h2>
+    <p>The drive to <strong>create</strong> appears rooted in intrinsic motivation, effectance and flow: process, agency, competence. The claim to <strong>own</strong> what you create has its own lineage. <span class="researcher">John Locke</span> <a class="cite" href="#ref-locke1689">(1689)</a> argued that mixing your labour with something makes it yours; that is the philosophical root of the intuition, and the Kanngiesser results suggest four-year-olds already hold it. On top sit the endowment effect, psychological ownership, identity extension (<span class="researcher">William James</span>'s "material self," <a class="cite" href="#ref-james1890">1890</a>), and legacy.</p>
+    <p>One distinction does most of the work in what follows: <strong>legal ownership</strong> (who may sell, license or exclude) and <strong>psychological ownership</strong> (who feels it is theirs) are different things that usually travel together and sometimes come apart.</p>
+    <p><strong>Creation without legal ownership.</strong> Open-source developers, ghostwriters and oral storytellers create without owning in the legal sense. They rarely lack psychological ownership. Maintainers speak of "my project," ghostwriters report resentment at unattributed work, and open-source burnout is often described in the language of a possession that has become a burden. The cases show creation persisting without legal title, not without the feeling.</p>
+    <p><strong>Ownership without creation.</strong> Inherited wealth, purchased art, acquired companies. Pierce et al.'s model predicts this ownership feels thinner because two of the three routes (investment of self, intimate knowledge) are missing. Plausible, and consistent with the labour findings, but untested in those terms.</p>
+    <p><strong>Founders.</strong> The question named startups, and there is a literature. <span class="researcher">Cardon et al.</span> <a class="cite" href="#ref-cardon2005">(2005)</a> documented how pervasively founders describe ventures as children ("my baby"), and <a class="cite" href="#ref-cardon2009">(2009)</a> formalised entrepreneurial passion as identity-centred: the venture is not just owned but is part of who the founder is. This is the strongest everyday case of creation, legal ownership and identity fusing, and it explains why losing control of a company can feel like a bereavement rather than a transaction.</p>
+    <p><strong>Where they conflict.</strong> IP disputes and work-for-hire are the clean cases: the law assigns ownership to one party while the psychology stays with the maker. The cost is real and the two systems can be separated on purpose, which is what employment contracts do.</p>
+    <div class="aside-note">Creation and <em>destruction</em> are not opposites. Schumpeter's "creative destruction" <a class="cite" href="#ref-schumpeter1942">(1942)</a> is an economic claim about how innovation displaces incumbents, not a psychological one; Bakunin's "the passion for destruction is a creative passion" <a class="cite" href="#ref-bakunin1842">(1842)</a> is a slogan, not a finding. The observation that making often requires unmaking is fair; there is no body of evidence behind it that we have found.</div>
+  </div>
+
+  <div class="section-block" id="s5">
+    <span class="section-num">Synthesis</span>
+    <h2 class="section-title">Tying the Threads Together</h2>
+    <p>Making things is older than our species and shared with other animals. What is distinctive about humans is that making compounds: we learn from each other well enough that each generation starts from the last one's ceiling. Whether the individual urge to build is itself a selected trait, a signal, a byproduct or mostly an artefact of that cultural ratchet is not settled, and the strongest recent work (Henrich) leans toward the last of these.</p>
+    <p>The feeling that what you made is yours is on firmer ground. It appears in preschoolers, in two cultures at least, in adults who overvalue their own furniture, and in the founders who call companies their children. Locke wrote it down; the psychology mostly confirms he was describing something real. Whether that feeling should be indulged is a different question, and several old traditions answer no.</p>
+    <div class="tension-box">
+      <div class="tension-label">What Remains Uncertain</div>
+      <p>Why the drive exists at the deepest evolutionary level. How much of it is individual and how much collective. Whether the death-anxiety account survives its replication record. How far the labour-makes-ownership rule generalises beyond the cultures where it has been tested. This page presents the tensions between approach and avoidance, individual and collective, attachment and non-attachment as open, because they are.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-audit" role="tabpanel" aria-labelledby="tab-audit">
+<div class="content-wrap">
+
+  <div class="section-block">
+    <span class="section-num">Review Log</span>
+    <h2 class="section-title">What the First Draft Got Wrong</h2>
+    <p>An earlier version of this page was drafted by an AI model and carried its own "critical audit" tab. An independent fact-check found that the audit contained no factual corrections, claimed fixes that were not in the text, and graded a draft the reader could not see. This log replaces it. It lists what was wrong in the previous version, what was changed, and what is still weak in the version you are reading. Items are ordered by how much they would have misled a reader.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-num">Category I</span>
+    <h2 class="section-title">Errors and Misattributions</h2>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>Flow was described as one of the most reliable sources of happiness</h4></div><p>The draft said experience-sampling studies find "higher happiness during active creation than passive leisure." The best-known ESM result says almost the opposite: people are in flow more at work than at leisure and still prefer leisure (the paradox of work). Flow tracks concentration and challenge, not momentary happiness.</p><p class="fix"><b>Changed</b> Rewritten in Section II with the 1989 study cited. Removed from the summary cards.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>Mumford was made to say things about startups</h4></div><p>One sentence attributed a guild-to-factory-to-startup arc to a 1934 book. The book does not frame history as guilds versus factories, and could not have said anything about startup culture.</p><p class="fix"><b>Changed</b> The sentence is split. Mumford owns the historical claim; the startup extension is marked as ours.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>Dawkins' extended phenotype was misapplied to human culture</h4></div><p>The draft called human creations "an extraordinarily flexible extended phenotype." Dawkins limited the concept to artefacts under genetic influence and handled culture through memes instead.</p><p class="fix"><b>Changed</b> The card now states the limit.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>Karma was confused with dharma</h4></div><p>"Karma frames creation as cosmic duty" mixes two concepts. Duty is dharma. The relevant teaching for the ownership question is the Gita's <em>nishkama karma</em>, acting without attachment to the fruits of action, which the draft did not mention.</p><p class="fix"><b>Changed</b> Rewritten in Section III with the verse cited.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>Psychological ownership was labelled an empirical finding</h4></div><p>Pierce, Kostova and Dirks (2001, 2003) are theory papers. The claim that "attachment to things we've made surpasses attachment to things merely purchased" was presented as their result. It is an inference from their model that has not been tested in those terms. The draft's audit flagged William James for exactly this category error and missed the same error one card up.</p><p class="fix"><b>Changed</b> Relabelled as theory; the inference is marked as such.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The Kyaga aside overreached</h4></div><p>An occupational association between creative professions and bipolar disorder was used to support "the drive to create can be compulsive, obsessive." Registry data cannot show that. The draft's audit also cited "Simonton" with no title or date and asserted burnout rates with no source.</p><p class="fix"><b>Changed</b> The aside now reports the 2011 and 2013 findings as associations and cites the critique of the mad-genius literature.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>Smaller attribution issues</h4></div><p>Many Labs 4 was dated to its 2019 preprint; the paper was published in 2022. Pinker's byproduct list was paraphrased with terms he did not use ("pattern recognition," "emotional regulation") and given no year. The summary said SDT's third need is "connection"; the term is relatedness. The draft said the IKEA effect is "moderated by domain investment," which is not a boundary condition in the 2012 paper; completion and disassembly are.</p><p class="fix"><b>Changed</b> All four corrected.</p></div>
+  </div>
+
+  <div class="section-block">
+    <span class="section-num">Category II</span>
+    <h2 class="section-title">Things the Draft Left Out</h2>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>The most direct evidence on question two was missing</h4></div><p>The draft had no Locke, so the philosophical root of "I made it, so it is mine" was absent. It had no developmental work, so it missed the finding that preschoolers assign ownership by creative labour, more strongly than adults do. It had no capuchin or child endowment-effect results, which show ownership feelings predate culture.</p><p class="fix"><b>Changed</b> All three added to Sections II and IV and to the summary card.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>Startups were in the question and nowhere in the answer</h4></div><p>The draft never engaged the entrepreneurship literature: founder passion, the "my baby" metaphor, identity-centred passion.</p><p class="fix"><b>Changed</b> A founders paragraph added to Section IV with the Cardon papers.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>Nonhuman creation was ignored</h4></div><p>Capuchins, chimpanzees and crows make tools. Capuchins produce stone flakes by accident, which is the strongest argument against the Lomekwi find and against any specifically human "drive to create." The draft never asked what is distinctive.</p><p class="fix"><b>Changed</b> Section I reframed around what is distinctive.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The music-evolution debate was twenty-five years stale</h4></div><p>The draft presented Miller (2000) versus Pinker (1997) as the open question. The current contest is social bonding versus credible signalling, both published in 2021.</p><p class="fix"><b>Changed</b> Both added. Zahavi's handicap principle is now marked as itself contested.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The SDT-versus-TMT "unresolved tension" was a published debate</h4></div><p>The draft presented approach-versus-avoidance as something "the field hasn't resolved," as though nobody had tried. Pyszczynski et al. and Ryan and Deci argued it directly in the same 2004 issue of Psychological Bulletin.</p><p class="fix"><b>Changed</b> The exchange is cited.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The archaeology was outdated and Neanderthals were absent</h4></div><p>Blombos and Chauvet are no longer the interesting cases. Sulawesi, the Spanish Neanderthal marks and the Trinil shell all bear on whether the drive is a <em>sapiens</em> story.</p><p class="fix"><b>Changed</b> Added, with the Neanderthal dating marked as disputed.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The legacy motive had a better-supported account than TMT</h4></div><p>Generativity (Erikson, McAdams) is a measured, non-defensive account of wanting one's creations to persist. The draft used only TMT.</p><p class="fix"><b>Changed</b> Generativity card added ahead of TMT.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>Legal and psychological ownership were conflated in the section meant to separate them</h4></div><p>Open-source developers and ghostwriters were given as "creation without ownership." They usually have strong psychological ownership; what they lack is legal title.</p><p class="fix"><b>Changed</b> Section IV now leads with the distinction.</p></div>
+  </div>
+
+  <div class="section-block">
+    <span class="section-num">Category III</span>
+    <h2 class="section-title">Problems With the Draft's Own Audit</h2>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>It claimed fixes that were not in the text</h4></div><p>The draft's verdict said the revision "added boundary conditions for the endowment effect." The research tab mentioned the endowment effect once, in passing, with no boundary conditions and no citation. A "non-Western frameworks" gap rated High was declared fixed by four sentences, one of which was wrong.</p><p class="fix"><b>Changed</b> The endowment effect has its own card with both sides of the Plott-Zeiler dispute. The non-Western section is rewritten.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-high">High</span><h4>It graded a document the reader could not see</h4></div><p>Every item critiqued "the original," and the visible text was the revision. A reader had no way to check whether the criticisms were fair or the fixes real. The audit functioned as a signal of rigour rather than a check on it.</p><p class="fix"><b>Changed</b> This log states what was wrong and what was changed, and the "still weak" section below applies to the page you are reading.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>It found no factual errors</h4></div><p>Its "Factual &amp; Attribution Issues" category contained only framing complaints. Zero wrong dates, zero misattributions. Category I above lists seven.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>It softened the TMT problem while appearing to sharpen it</h4></div><p>The draft's audit said Many Labs 4 tested worldview defence, not legacy, implying the creation claim was untouched. The creation claim rests on the same mortality-salience paradigm, so it inherits the failure rather than escaping it.</p><p class="fix"><b>Changed</b> Stated in the TMT card.</p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>"Authority by accumulation" was named as a flaw and then made worse</h4></div><p>The draft's audit complained that stacking references masks weak claims, and the revision responded by adding more names. This version adds more still. The mitigation is that every name now links to a source and carries a confidence label, so the reader can weigh rather than count.</p></div>
+  </div>
+
+  <div class="section-block">
+    <span class="section-num">Category IV</span>
+    <h2 class="section-title">Still Weak in This Version</h2>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The cross-cultural evidence on ownership is thin</h4></div><p>The labour-makes-ownership rule has been tested in the UK, Japan and a few other samples. Most of the IKEA-effect and psychological-ownership work is on WEIRD samples (<span class="researcher">Henrich, Heine &amp; Norenzayan</span> <a class="cite" href="#ref-henrich2010">2010</a>). The page says the effect "generalises" more confidently than two cultures warrant.</p><p class="fix"><b class="open">Open</b></p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-med">Medium</span><h4>The Henrich tension is stated, not resolved</h4></div><p>Section I says the collective-brain view is in tension with individual-level accounts and that the two are "not simply additive." That is true and it is also a way of declining to pick. A stronger page would say which level the two questions are really asking about.</p><p class="fix"><b class="open">Open</b></p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>The non-Western traditions are still one paragraph</h4></div><p>The section is now accurate and no longer framed as East versus West, but a paragraph is not engagement. Someone who knows the Gita commentarial tradition or Zen accounts of craft would find it thin.</p><p class="fix"><b class="open">Open</b></p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>The destruction aside has no evidence behind it</h4></div><p>It now says so. It could be cut.</p><p class="fix"><b class="open">Open</b></p></div>
+
+    <div class="audit-item"><div class="audit-head"><span class="audit-severity severity-low">Low</span><h4>Sources were checked against memory and a small number of lookups, not read in full</h4></div><p>Dates, venues and DOIs were verified for the sources marked with links. Characterisations of what each paper found are from the reviewer's knowledge of the literature and could be wrong in detail. Corrections welcome.</p><p class="fix"><b class="open">Open</b></p></div>
+  </div>
+
+</div>
+</div>
+
+<div class="panel sources" id="panel-sources" role="tabpanel" aria-labelledby="tab-sources">
+<div class="content-wrap">
+  <div class="section-block">
+    <span class="section-num">Sources</span>
+    <h2 class="section-title">Everything Cited, With Links</h2>
+    <p>Ordered roughly as they appear. Links go to the publisher's DOI where one exists.</p>
+    <ol>
+      <li id="ref-harmand2015">Harmand, S. et al. (2015). 3.3-million-year-old stone tools from Lomekwi 3, West Turkana, Kenya. <em>Nature</em>, 521, 310–315. <a href="https://doi.org/10.1038/nature14464">doi:10.1038/nature14464</a></li>
+      <li id="ref-proffitt2016">Proffitt, T. et al. (2016). Wild monkeys flake stone tools. <em>Nature</em>, 539, 85–88. <a href="https://doi.org/10.1038/nature20112">doi:10.1038/nature20112</a></li>
+      <li id="ref-semaw1997">Semaw, S. et al. (1997). 2.5-million-year-old stone tools from Gona, Ethiopia. <em>Nature</em>, 385, 333–336. <a href="https://doi.org/10.1038/385333a0">doi:10.1038/385333a0</a></li>
+      <li id="ref-henrich2015">Henrich, J. (2015). <em>The Secret of Our Success</em>. Princeton University Press.</li>
+      <li id="ref-tomasello1999">Tomasello, M. (1999). <em>The Cultural Origins of Human Cognition</em>. Harvard University Press.</li>
+      <li id="ref-miller2000">Miller, G. (2000). <em>The Mating Mind</em>. Doubleday.</li>
+      <li id="ref-zahavi1975">Zahavi, A. (1975). Mate selection: a selection for a handicap. <em>Journal of Theoretical Biology</em>, 53, 205–214. <a href="https://doi.org/10.1016/0022-5193(75)90111-3">doi:10.1016/0022-5193(75)90111-3</a></li>
+      <li id="ref-penn2020">Penn, D. J. &amp; Számadó, S. (2020). The Handicap Principle: how an erroneous hypothesis became a scientific principle. <em>Biological Reviews</em>, 95, 267–290. <a href="https://doi.org/10.1111/brv.12563">doi:10.1111/brv.12563</a></li>
+      <li id="ref-pinker1997">Pinker, S. (1997). <em>How the Mind Works</em>. W. W. Norton. (Chapter 8, "The Meaning of Life.")</li>
+      <li id="ref-savage2021">Savage, P. E. et al. (2021). Music as a coevolved system for social bonding. <em>Behavioral and Brain Sciences</em>, 44, e59. <a href="https://doi.org/10.1017/S0140525X20000333">doi:10.1017/S0140525X20000333</a></li>
+      <li id="ref-mehr2021">Mehr, S. A. et al. (2021). Origins of music in credible signaling. <em>Behavioral and Brain Sciences</em>, 44, e60. <a href="https://doi.org/10.1017/S0140525X20000345">doi:10.1017/S0140525X20000345</a></li>
+      <li id="ref-odlingsmee2003">Odling-Smee, F. J., Laland, K. N. &amp; Feldman, M. W. (2003). <em>Niche Construction: The Neglected Process in Evolution</em>. Princeton University Press.</li>
+      <li id="ref-dawkins1982">Dawkins, R. (1982). <em>The Extended Phenotype</em>. Oxford University Press.</li>
+      <li id="ref-deci1985">Deci, E. L. &amp; Ryan, R. M. (1985). <em>Intrinsic Motivation and Self-Determination in Human Behavior</em>. Plenum. Ryan, R. M. &amp; Deci, E. L. (2000). Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being. <em>American Psychologist</em>, 55, 68–78. <a href="https://doi.org/10.1037/0003-066X.55.1.68">doi:10.1037/0003-066X.55.1.68</a></li>
+      <li id="ref-deci1999">Deci, E. L., Koestner, R. &amp; Ryan, R. M. (1999). A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation. <em>Psychological Bulletin</em>, 125, 627–668. <a href="https://doi.org/10.1037/0033-2909.125.6.627">doi:10.1037/0033-2909.125.6.627</a></li>
+      <li id="ref-amabile1996">Amabile, T. M. (1996). <em>Creativity in Context</em>. Westview Press.</li>
+      <li id="ref-csik1990">Csikszentmihalyi, M. (1990). <em>Flow: The Psychology of Optimal Experience</em>. Harper &amp; Row.</li>
+      <li id="ref-csik1989">Csikszentmihalyi, M. &amp; LeFevre, J. (1989). Optimal experience in work and leisure. <em>Journal of Personality and Social Psychology</em>, 56, 815–822. <a href="https://doi.org/10.1037/0022-3514.56.5.815">doi:10.1037/0022-3514.56.5.815</a></li>
+      <li id="ref-kyaga2011">Kyaga, S. et al. (2011). Creativity and mental disorder: family study of 300,000 people with severe mental disorder. <em>British Journal of Psychiatry</em>, 199, 373–379. <a href="https://doi.org/10.1192/bjp.bp.110.085316">doi:10.1192/bjp.bp.110.085316</a>. Kyaga, S. et al. (2013). Mental illness, suicide and creativity: 40-year prospective total population study. <em>Journal of Psychiatric Research</em>, 47, 83–90. <a href="https://doi.org/10.1016/j.jpsychires.2012.09.010">doi:10.1016/j.jpsychires.2012.09.010</a></li>
+      <li id="ref-schlesinger2009">Schlesinger, J. (2009). Creative mythconceptions: a closer look at the evidence for the "mad genius" hypothesis. <em>Psychology of Aesthetics, Creativity, and the Arts</em>, 3, 62–72. <a href="https://doi.org/10.1037/a0013975">doi:10.1037/a0013975</a></li>
+      <li id="ref-kanngiesser2010">Kanngiesser, P., Gjersoe, N. &amp; Hood, B. M. (2010). The effect of creative labor on property-ownership transfer by preschool children and adults. <em>Psychological Science</em>, 21, 1236–1241. <a href="https://doi.org/10.1177/0956797610380701">doi:10.1177/0956797610380701</a></li>
+      <li id="ref-kanngiesser2014">Kanngiesser, P., Itakura, S. &amp; Hood, B. M. (2014). The effect of labour on ownership decisions in two cultures: developmental evidence from Japan and the United Kingdom. <em>British Journal of Developmental Psychology</em>, 32, 320–329. <a href="https://doi.org/10.1111/bjdp.12043">doi:10.1111/bjdp.12043</a></li>
+      <li id="ref-norton2012">Norton, M. I., Mochon, D. &amp; Ariely, D. (2012). The IKEA effect: when labor leads to love. <em>Journal of Consumer Psychology</em>, 22, 453–460. <a href="https://doi.org/10.1016/j.jcps.2011.08.002">doi:10.1016/j.jcps.2011.08.002</a></li>
+      <li id="ref-white1959">White, R. W. (1959). Motivation reconsidered: the concept of competence. <em>Psychological Review</em>, 66, 297–333. <a href="https://doi.org/10.1037/h0040934">doi:10.1037/h0040934</a></li>
+      <li id="ref-thaler1980">Thaler, R. (1980). Toward a positive theory of consumer choice. <em>Journal of Economic Behavior &amp; Organization</em>, 1, 39–60. <a href="https://doi.org/10.1016/0167-2681(80)90051-7">doi:10.1016/0167-2681(80)90051-7</a></li>
+      <li id="ref-kkt1990">Kahneman, D., Knetsch, J. L. &amp; Thaler, R. H. (1990). Experimental tests of the endowment effect and the Coase theorem. <em>Journal of Political Economy</em>, 98, 1325–1348. <a href="https://doi.org/10.1086/261737">doi:10.1086/261737</a></li>
+      <li id="ref-santos2008">Lakshminarayanan, V., Chen, M. K. &amp; Santos, L. R. (2008). Endowment effect in capuchin monkeys. <em>Philosophical Transactions of the Royal Society B</em>, 363, 3837–3844. <a href="https://doi.org/10.1098/rstb.2008.0149">doi:10.1098/rstb.2008.0149</a></li>
+      <li id="ref-plott2005">Plott, C. R. &amp; Zeiler, K. (2005). The willingness to pay–willingness to accept gap, the "endowment effect," subject misconceptions, and experimental procedures for eliciting valuations. <em>American Economic Review</em>, 95, 530–545. <a href="https://doi.org/10.1257/0002828054201387">doi:10.1257/0002828054201387</a></li>
+      <li id="ref-isoni2011">Isoni, A., Loomes, G. &amp; Sugden, R. (2011). The willingness to pay–willingness to accept gap, the "endowment effect," subject misconceptions, and experimental procedures for eliciting valuations: comment. <em>American Economic Review</em>, 101, 991–1011. <a href="https://doi.org/10.1257/aer.101.2.991">doi:10.1257/aer.101.2.991</a></li>
+      <li id="ref-pierce2001">Pierce, J. L., Kostova, T. &amp; Dirks, K. T. (2001). Toward a theory of psychological ownership in organizations. <em>Academy of Management Review</em>, 26, 298–310. <a href="https://doi.org/10.5465/amr.2001.4378028">doi:10.5465/amr.2001.4378028</a></li>
+      <li id="ref-pierce2003">Pierce, J. L., Kostova, T. &amp; Dirks, K. T. (2003). The state of psychological ownership: integrating and extending a century of research. <em>Review of General Psychology</em>, 7, 84–107. <a href="https://doi.org/10.1037/1089-2680.7.1.84">doi:10.1037/1089-2680.7.1.84</a></li>
+      <li id="ref-erikson1950">Erikson, E. H. (1950). <em>Childhood and Society</em>. W. W. Norton.</li>
+      <li id="ref-mcadams1992">McAdams, D. P. &amp; de St. Aubin, E. (1992). A theory of generativity and its assessment through self-report, behavioral acts, and narrative themes in autobiography. <em>Journal of Personality and Social Psychology</em>, 62, 1003–1015. <a href="https://doi.org/10.1037/0022-3514.62.6.1003">doi:10.1037/0022-3514.62.6.1003</a></li>
+      <li id="ref-greenberg1986">Greenberg, J., Pyszczynski, T. &amp; Solomon, S. (1986). The causes and consequences of a need for self-esteem: a terror management theory. In R. F. Baumeister (ed.), <em>Public Self and Private Self</em>, 189–212. Springer.</li>
+      <li id="ref-becker1973">Becker, E. (1973). <em>The Denial of Death</em>. Free Press.</li>
+      <li id="ref-klein2022">Klein, R. A. et al. (2022). Many Labs 4: failure to replicate mortality salience effect with and without original author involvement. <em>Collabra: Psychology</em>, 8(1), 35271. <a href="https://doi.org/10.1525/collabra.35271">doi:10.1525/collabra.35271</a></li>
+      <li id="ref-pyszczynski2004">Pyszczynski, T., Greenberg, J., Solomon, S., Arndt, J. &amp; Schimel, J. (2004). Why do people need self-esteem? A theoretical and empirical review. <em>Psychological Bulletin</em>, 130, 435–468. <a href="https://doi.org/10.1037/0033-2909.130.3.435">doi:10.1037/0033-2909.130.3.435</a></li>
+      <li id="ref-ryan2004">Ryan, R. M. &amp; Deci, E. L. (2004). Avoiding death or engaging life as accounts of meaning and culture: comment on Pyszczynski et al. (2004). <em>Psychological Bulletin</em>, 130, 473–477. <a href="https://doi.org/10.1037/0033-2909.130.3.473">doi:10.1037/0033-2909.130.3.473</a></li>
+      <li id="ref-henshilwood2002">Henshilwood, C. S. et al. (2002). Emergence of modern human behavior: Middle Stone Age engravings from South Africa. <em>Science</em>, 295, 1278–1280. <a href="https://doi.org/10.1126/science.1067575">doi:10.1126/science.1067575</a></li>
+      <li id="ref-henshilwood2018">Henshilwood, C. S. et al. (2018). An abstract drawing from the 73,000-year-old levels at Blombos Cave, South Africa. <em>Nature</em>, 562, 115–118. <a href="https://doi.org/10.1038/s41586-018-0514-3">doi:10.1038/s41586-018-0514-3</a></li>
+      <li id="ref-quiles2016">Quiles, A. et al. (2016). A high-precision chronological model for the decorated Upper Paleolithic cave of Chauvet-Pont d'Arc. <em>PNAS</em>, 113, 4670–4675. <a href="https://doi.org/10.1073/pnas.1523158113">doi:10.1073/pnas.1523158113</a></li>
+      <li id="ref-oktaviana2024">Oktaviana, A. A. et al. (2024). Narrative cave art in Indonesia by 51,200 years ago. <em>Nature</em>, 631, 814–818. <a href="https://doi.org/10.1038/s41586-024-07541-7">doi:10.1038/s41586-024-07541-7</a></li>
+      <li id="ref-hoffmann2018">Hoffmann, D. L. et al. (2018). U-Th dating of carbonate crusts reveals Neandertal origin of Iberian cave art. <em>Science</em>, 359, 912–915. <a href="https://doi.org/10.1126/science.aap7778">doi:10.1126/science.aap7778</a></li>
+      <li id="ref-white2020">White, R. et al. (2020). Still no archaeological evidence that Neanderthals created Iberian cave art. <em>Journal of Human Evolution</em>, 144, 102640. <a href="https://doi.org/10.1016/j.jhevol.2019.102640">doi:10.1016/j.jhevol.2019.102640</a></li>
+      <li id="ref-joordens2014">Joordens, J. C. A. et al. (2015). <em>Homo erectus</em> at Trinil on Java used shells for tool production and engraving. <em>Nature</em>, 518, 228–231 (online 2014). <a href="https://doi.org/10.1038/nature13962">doi:10.1038/nature13962</a></li>
+      <li id="ref-brown1991">Brown, D. E. (1991). <em>Human Universals</em>. McGraw-Hill.</li>
+      <li id="ref-gita"><em>Bhagavad Gita</em>, 2.47. "You have a right to your actions, but never to the fruits of your actions." Any standard translation.</li>
+      <li id="ref-slingerland2014">Slingerland, E. (2014). <em>Trying Not to Try: The Art and Science of Spontaneity</em>. Crown.</li>
+      <li id="ref-anne1710">Statute of Anne, 8 Ann. c. 21 (1710). Venetian Patent Statute (1474). Martial, <em>Epigrams</em> 1.52 (on "plagiarius").</li>
+      <li id="ref-marx1844">Marx, K. (1844). <em>Economic and Philosophic Manuscripts of 1844</em>, "Estranged Labour."</li>
+      <li id="ref-mumford1934">Mumford, L. (1934). <em>Technics and Civilization</em>. Harcourt, Brace.</li>
+      <li id="ref-locke1689">Locke, J. (1689). <em>Second Treatise of Government</em>, chapter 5, "Of Property."</li>
+      <li id="ref-james1890">James, W. (1890). <em>The Principles of Psychology</em>, chapter 10, "The Consciousness of Self." Henry Holt.</li>
+      <li id="ref-cardon2005">Cardon, M. S., Zietsma, C., Saparito, P., Matherne, B. P. &amp; Davis, C. (2005). A tale of passion: new insights into entrepreneurship from a parenthood metaphor. <em>Journal of Business Venturing</em>, 20, 23–45. <a href="https://doi.org/10.1016/j.jbusvent.2004.01.002">doi:10.1016/j.jbusvent.2004.01.002</a></li>
+      <li id="ref-cardon2009">Cardon, M. S., Wincent, J., Singh, J. &amp; Drnovsek, M. (2009). The nature and experience of entrepreneurial passion. <em>Academy of Management Review</em>, 34, 511–532. <a href="https://doi.org/10.5465/amr.2009.40633190">doi:10.5465/amr.2009.40633190</a></li>
+      <li id="ref-schumpeter1942">Schumpeter, J. A. (1942). <em>Capitalism, Socialism and Democracy</em>, chapter 7. Harper.</li>
+      <li id="ref-bakunin1842">Bakunin, M. (1842). "The Reaction in Germany." <em>Deutsche Jahrbücher</em>.</li>
+      <li id="ref-henrich2010">Henrich, J., Heine, S. J. &amp; Norenzayan, A. (2010). The weirdest people in the world? <em>Behavioral and Brain Sciences</em>, 33, 61–83. <a href="https://doi.org/10.1017/S0140525X0999152X">doi:10.1017/S0140525X0999152X</a></li>
+    </ol>
+  </div>
+</div>
+</div>
+
+<div class="footer">Evolutionary Biology · Psychology · Archaeology · Philosophy<br>Drafted with Claude, fact-checked and rewritten September 2026 · Corrections: open an issue on the repository</div>
+
+<script>
+  var TABS = ['research', 'audit', 'sources'];
+
+  function switchTab(tab, scroll) {
+    if (TABS.indexOf(tab) === -1) tab = 'research';
+    TABS.forEach(function (t) {
+      var btn = document.getElementById('tab-' + t);
+      var panel = document.getElementById('panel-' + t);
+      var on = t === tab;
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      panel.classList.toggle('active', on);
+    });
+    if (history.replaceState) history.replaceState(null, '', '#' + tab);
+    if (scroll !== false) {
+      var top = document.getElementById('main').getBoundingClientRect().top + window.pageYOffset;
+      if (scroll === true || window.pageYOffset > top) window.scrollTo(0, top);
+    }
+  }
+
+  // Deep links: #audit / #sources / #ref-xxx / #s3
+  (function () {
+    var h = location.hash.replace('#', '');
+    if (!h) return;
+    if (TABS.indexOf(h) !== -1) { switchTab(h, true); return; }
+    if (h.indexOf('ref-') === 0) { switchTab('sources', false); }
+    var el = document.getElementById(h);
+    if (el) setTimeout(function () { el.scrollIntoView(); }, 0);
+  })();
+
+  // Citation links: open the Sources tab, then jump
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a.cite');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    switchTab('sources', false);
+    var el = document.getElementById(id);
+    if (el) { e.preventDefault(); history.replaceState(null, '', '#' + id); el.scrollIntoView(); }
+  });
+
+  window.addEventListener('scroll', function () {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    document.getElementById('progressFill').style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  });
+</script>
+
+</body>
+</html>
